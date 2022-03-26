@@ -60,26 +60,58 @@ async function loginemail(req, res) {
 
 //login using phone number and otp
 async function sendotp(req, res) {
-  const phone = `${91}${req.body.phone}`;
+  const phone = req.body.phone;
   const otp = Math.floor(100000 + Math.random() * 900000);
-  const ttl = 5 * 60 * 1000;
-  const expires = Date.now() + ttl;
-  const data = `${phone}.${otp}.${expires}`;
+  const data = `${phone}.${otp}`;
   const hash = crypto.createHmac("sha256", smsKey).update(data).digest("hex");
-  const fullHash = `${hash}.${expires}`;
+  const userExist = await User.exists({ phone: phone });
 
-  try {
-    const response = await client.messages.create({
-      body: `Your one time login password for login is ${otp}`,
-      from: +15512092997,
-      to: +919422803010,
-    });
-    // console.log(response);
-  } catch (error) {
-    res.status(400).send(error.message);
+  if (!userExist) {
+    res.status(400).send({ msg: "Phone not registered" });
+  } else {
+    const userOtp = await User.findOneAndUpdate(
+      { phone: phone },
+      { $set: { otp: hash } },
+      { new: true }
+    );
   }
 
-  res.status(200).send({ phone, hash: fullHash });
+  //   try {
+  //     const response = await client.messages.create({
+  //       body: `Your one time login password for login is ${otp}`,
+  //       from: +15512092997,
+  //       to: +919422803010,
+  //     });
+  //     // console.log(response);
+  //   } catch (error) {
+  //     res.status(400).send(error.message);
+  //   }
+
+  res.status(200).send({ phone, otp });
 }
 
-module.exports = { register, loginemail, sendotp };
+async function verifyotp(req, res) {
+  const phone = req.body.phone;
+  const otp = req.body.otp;
+
+  const data = `${phone}.${otp}`;
+  const newCalculatedHash = crypto
+    .createHmac("sha256", smsKey)
+    .update(data)
+    .digest("hex");
+
+  const userExist = await User.findOne({ phone: phone });
+  const token = await generateToken(userExist);
+  if (newCalculatedHash === userExist.otp) {
+    return res.status(200).json({
+      ...userExist,
+      token,
+    });
+  } else {
+    return res
+      .status(400)
+      .send({ verification: false, msg: "verification failed" });
+  }
+}
+
+module.exports = { register, loginemail, sendotp, verifyotp };

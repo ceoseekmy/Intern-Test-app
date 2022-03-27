@@ -9,7 +9,7 @@ function App() {
    const [socket,setSocket]=useState(null);
 
 const setupSocket=()=>{
-
+console.log("love")
 }
 useEffect(() => {
     setupSocket();

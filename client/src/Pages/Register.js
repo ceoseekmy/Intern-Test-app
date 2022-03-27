@@ -8,7 +8,7 @@ function Register(props) {
   const passwordRef = React.createRef();
   const phoneRef =React.createRef();
 
-const registerUser=(props)=>{
+const registerUser=()=>{
     const name = nameRef.current.value;
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
@@ -40,7 +40,7 @@ const registerUser=(props)=>{
           type="text"
           name="name"
           id="name"
-          placeholder="John Doe"
+          placeholder="Your Name"
           ref={nameRef}
         />
       </div>

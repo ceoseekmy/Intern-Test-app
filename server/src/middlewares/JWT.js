@@ -28,7 +28,7 @@ async function checkToken(req, res, next) {
 
   try {
     const user = JWT.verify(token, process.env.Secret);
-    req.body.userID = user.id;
+    // req.body.userID = user.id;
   } catch (error) {
     return res.status(400).json({
       msg: "Token Invalid",

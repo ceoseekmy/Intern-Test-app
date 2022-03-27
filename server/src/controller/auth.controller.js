@@ -100,7 +100,7 @@ async function verifyotp(req, res) {
     .update(data)
     .digest("hex");
 
-  const userExist = await User.findOne({ phone: phone });
+  const userExist = await User.findOne({ phone: phone }).lean();
   const token = await generateToken(userExist);
   if (newCalculatedHash === userExist.otp) {
     return res.status(200).json({

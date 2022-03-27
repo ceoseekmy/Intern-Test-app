@@ -16,7 +16,9 @@ async function register(req, res) {
 
   try {
     const userExist = await User.exists({ email: record.email });
-
+    if (userExist) {
+      return res.status(400).send({ msg: "user already registered" });
+    }
     //process.env.Salt
     const hashedPassword = await bcrypt.hash(record.password, 10);
     var newUser = await User.create({
@@ -29,7 +31,7 @@ async function register(req, res) {
     // const token = await generateToken(newUser);
 
     // newUser.token = token;
-console.log("user created");
+    console.log("user created");
     // res.send(newUser);
   } catch (error) {
     res.status(400).send(error.message);

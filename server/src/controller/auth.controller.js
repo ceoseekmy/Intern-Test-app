@@ -26,11 +26,11 @@ async function register(req, res) {
       phone: parseInt(record.phone),
     });
 
-    const token = await generateToken(newUser);
+    // const token = await generateToken(newUser);
 
-    newUser.token = token;
-
-    res.send(newUser);
+    // newUser.token = token;
+console.log("user created");
+    // res.send(newUser);
   } catch (error) {
     res.status(400).send(error.message);
   }

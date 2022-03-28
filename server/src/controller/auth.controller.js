@@ -32,6 +32,9 @@ async function register(req, res) {
 
     // newUser.token = token;
     console.log("user created");
+    res.json({
+      message: "User [" +record.name + "] registered successfully!",
+    });
     // res.send(newUser);
   } catch (error) {
     res.status(400).send(error.message);
@@ -47,9 +50,11 @@ async function loginemail(req, res) {
     return res.status(400).json({ msg: "Invalid Credentials" });
   }
 
+ 
   const isMatch = await bcrypt.compare(record.password, userExist.password);
 
   if (!isMatch) {
+   
     return res.status(400).json({ msg: "Invalid Credentials" });
   }
 

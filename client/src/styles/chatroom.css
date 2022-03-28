@@ -22,7 +22,7 @@
     right: 0;
     bottom: 3.5rem;
     padding: 0.5rem;
-    overflow: auto;
+    overflow: scroll;
   }
   
   .chatroomActions {

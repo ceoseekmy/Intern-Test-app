@@ -1,24 +1,49 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom"; ///*/*/*/*//*/*/ exact ,render
+import { BrowserRouter, Routes, Route,Navigate,} from "react-router-dom"; ///*/*/*/*//*/*/ exact ,render
 import ChatRoom from "./Pages/ChatRoom";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import io from "socket.io-client";
 
 function App() {
-  const [socket, setSocket] = useState(null);
 
+  const [socket, setSocket] = useState(null);
+  const [cc_token,setcc_token]=useState(localStorage.getItem('loginToken'))
   const setupSocket = () => {
-    console.log("love");
+   const token=localStorage.getItem('loginToken');
+   setcc_token(localStorage.getItem('loginToken'))
+   if(token && !socket){
+     const newSocket=io("http://localhost:4000",{
+       query:{
+         token:localStorage.getItem('loginToken')
+       }
+     })
+     newSocket.on("disconnect", () => {
+      setSocket(null);
+      setTimeout(setupSocket, 3000);
+      
+    });
+
+     setSocket(newSocket);
+   }
+   else{
+     
+ return  <Route
+ path="/login"
+ element={<Login setupSocket={setupSocket} />}
+ exact
+/>
+    }
   };
   useEffect(() => {
     setupSocket();
+   setcc_token(localStorage.getItem('loginToken'))
     //eslint-disable-next-line
   }, []);
 
   return (
     <BrowserRouter>
-      <Routes>
+      <Routes >
         <Route path="/register" element={<Register />} exact />
 
         <Route
@@ -26,10 +51,10 @@ function App() {
           element={<Login setupSocket={setupSocket} />}
           exact
         />
-
+      
         <Route
           path="/chatroom"
-          render={() => <ChatRoom socket={socket} />}
+          element={cc_token ?(socket? <ChatRoom socket={socket} />:setupSocket()): <Navigate to="/login"/>}
           exact
         />
       </Routes>

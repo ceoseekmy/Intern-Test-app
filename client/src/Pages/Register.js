@@ -1,13 +1,14 @@
 import React from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 
-function Register(props) {
+
+function Register() {
   const nameRef = React.createRef();
   const emailRef = React.createRef();
   const passwordRef = React.createRef();
   const phoneRef = React.createRef();
-
+const navigate=useNavigate();
   const registerUser = () => {
     const name = nameRef.current.value;
     const email = emailRef.current.value;
@@ -21,7 +22,8 @@ function Register(props) {
         phone,
       })
       .then((response) => {
-        props.history.push("/login");
+        console.log("lets go to login");
+             navigate("/login");
       })
       .catch((err) => {
         console.log(err);
@@ -72,7 +74,7 @@ function Register(props) {
         />
       </div>
       <button type="submit" onClick={registerUser}>
-        <Link to="/login">Register</Link>
+      Register
       </button>
     </div>
   );

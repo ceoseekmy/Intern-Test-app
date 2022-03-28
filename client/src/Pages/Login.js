@@ -1,10 +1,29 @@
 import React from "react";
 import axios from "axios";
-import { Link, withRouter } from "react-router-dom";
-function Login() {
+import { Link, useNavigate } from "react-router-dom";
+function Login(props) {
   const emailRef = React.createRef();
   const passwordRef = React.createRef();
-  const loginUser = () => {};
+  const navigate=useNavigate();
+  const loginUser = () => {
+  const email=emailRef.current.value;
+  const password=passwordRef.current.value;
+
+  axios.post('http://localhost:4000/api/auth/loginemail',{
+    email,password,
+  }).then((response)=>{
+        localStorage.setItem("loginToken",response.data.token);
+        console.log("lets go to chatroom with token",response.data.token);
+       
+        props.setupSocket()
+         navigate("/chatroom");
+       
+  }).catch((err)=>{
+         console.log(err);
+  })
+  
+
+  };
 
   return (
     <div className="card">
@@ -30,7 +49,9 @@ function Login() {
             ref={passwordRef}
           />
         </div>
-        <button onClick={loginUser}>Login</button>
+        <button onClick={loginUser}>
+          Login
+          </button>
       </div>
     </div>
   );

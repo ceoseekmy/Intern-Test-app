@@ -1,42 +1,45 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-
+import React from "react";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 export default function Root() {
+  const navigate = useNavigate();
+
+  const googleLogin = () => {
+    axios
+      .get("http://localhost:4000/api/auth/google", {})
+      .then((response) => {
+        localStorage.setItem("loginToken", response.data.token);
+        navigate("/chatroom");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div className="card">
-    <div className="cardHeader">Let's Chat</div>
-    <div className="cardBody">
-      <div className="inputGroup">
-      <button type="submit">
-   
-    <Link to='/login'> Log in (user/Pass)</Link>
-    </button>
-    
+      <div className="cardHeader">Let's Chat</div>
+      <div className="cardBody">
+        <div className="inputGroup">
+          <button type="submit">
+            <Link to="/login"> Log in (user/Pass)</Link>
+          </button>
+        </div>
       </div>
-     
-     
-    </div>
-    <div className="cardBody">
-      <div className="inputGroup">
-      <button type="submit">
-  
-    <Link to='/loginwithotp'>  log in (Mobile)</Link>
-    </button>
-    
+      <div className="cardBody">
+        <div className="inputGroup">
+          <button type="submit">
+            <Link to="/loginwithotp"> log in (Mobile)</Link>
+          </button>
+        </div>
       </div>
-     
-     
-    </div>
-    <div className="inputGroup">
-    <button type="submit" >
-    log in (Google)
-    </button>
-    </div>
-    
-    <button type="submit" >
+      <div className="inputGroup">
+        <button onClick={googleLogin}>log in (Google)</button>
+      </div>
 
-    <Link to='/register'>Register</Link>
-    </button>
-  </div>
-  )
+      <button type="submit">
+        <Link to="/register">Register</Link>
+      </button>
+    </div>
+  );
 }

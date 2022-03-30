@@ -4,25 +4,26 @@ import { Link, useNavigate } from "react-router-dom";
 function Login(props) {
   const emailRef = React.createRef();
   const passwordRef = React.createRef();
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const loginUser = () => {
-  const email=emailRef.current.value;
-  const password=passwordRef.current.value;
+    const email = emailRef.current.value;
+    const password = passwordRef.current.value;
 
-  axios.post('http://localhost:4000/api/auth/loginemail',{
-    email,password,
-  }).then((response)=>{
-        localStorage.setItem("loginToken",response.data.token);
-        console.log("lets go to chatroom with token",response.data.token);
-       
-        props.setupSocket()
-         navigate("/chatroom");
-       
-  }).catch((err)=>{
-         console.log(err);
-  })
-  
+    axios
+      .post("http://localhost:4000/api/auth/loginemail", {
+        email,
+        password,
+      })
+      .then((response) => {
+        localStorage.setItem("loginToken", response.data.token);
+        console.log("lets go to chatroom with token", response.data.token);
 
+        props.setupSocket();
+        navigate("/chatroom");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -49,9 +50,7 @@ function Login(props) {
             ref={passwordRef}
           />
         </div>
-        <button onClick={loginUser}>
-          Login
-          </button>
+        <button onClick={loginUser}>Login</button>
       </div>
     </div>
   );

@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route,Navigate,} from "react-router-dom"; ///*/*
 import ChatRoom from "./Pages/ChatRoom";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
+import Root from "./Pages/Root";
+import LoginWithOtp from "./Pages/LoginWithOtp";
 import io from "socket.io-client";
 
 function App() {
@@ -44,13 +46,17 @@ function App() {
   return (
     <BrowserRouter>
       <Routes >
+      <Route path="/" element={<Root />} exact />
+
         <Route path="/register" element={<Register />} exact />
 
         <Route
           path="/login"
           element={<Login setupSocket={setupSocket} />}
           exact
+          
         />
+        <Route path="/loginwithotp" element={<LoginWithOtp setupSocket={setupSocket} />} exact />
       
         <Route
           path="/chatroom"

@@ -23,7 +23,7 @@ const navigate=useNavigate();
       })
       .then((response) => {
         console.log("lets go to login");
-             navigate("/login");
+             navigate("/");
       })
       .catch((err) => {
         console.log(err);

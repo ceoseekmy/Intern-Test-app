@@ -58,7 +58,7 @@ const server=app.listen(port, function () {
         throw err;
         
     }
-    //  console.log(res);
+     console.log(res);
     io.emit('send-all-chats', res,socket.id);
 });
 finalpush();

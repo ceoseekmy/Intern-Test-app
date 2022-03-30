@@ -68,13 +68,14 @@ async function loginemail(req, res) {
 //login using phone number and otp
 async function sendotp(req, res) {
   const phone = req.body.phone;
+  console.log(phone);
   const otp = Math.floor(100000 + Math.random() * 900000);
   const data = `${phone}.${otp}`;
   const hash = crypto.createHmac("sha256", smsKey).update(data).digest("hex");
   const userExist = await User.exists({ phone: phone });
 
   if (!userExist) {
-    res.status(400).send({ msg: "Phone not registered" });
+    return res.status(400).send({ msg: "Phone not registered" });
   } else {
     const userOtp = await User.findOneAndUpdate(
       { phone: phone },
@@ -82,24 +83,28 @@ async function sendotp(req, res) {
       { new: true }
     );
   }
+  console.log(userExist);
 
-  //   try {
-  //     const response = await client.messages.create({
-  //       body: `Your one time login password for login is ${otp}`,
-  //       from: +15512092997,
-  //       to: +919422803010,
-  //     });
-  //     // console.log(response);
-  //   } catch (error) {
-  //     res.status(400).send(error.message);
-  //   }
+    try {
+      const response = await client.messages.create({
+        body: `Your one time login password for login is ${otp}`,
+        from: +15512092997,
+        to: `+91${phone}`,
+      });
+      console.log(response);
+    } catch (error) {
+      console.log(error)
+     return res.status(400).send(error.message);
+    }
+   
 
-  res.status(200).send({ phone, otp });
+ return res.status(200).send({ phone, otp });
 }
 
 async function verifyotp(req, res) {
   const phone = req.body.phone;
   const otp = req.body.otp;
+  console.log(phone," ",otp)
 
   const data = `${phone}.${otp}`;
   const newCalculatedHash = crypto

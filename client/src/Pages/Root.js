@@ -24,17 +24,6 @@ export default function Root() {
       <div className="inputGroup">
         <button>log in (Google)</button>
       </div>
-<<<<<<< HEAD
-=======
-     
-     
-    </div>
-    <div className="inputGroup">
-   <LoginGoogle setup={setup}/>
-    </div>
-    
-    <button type="submit" >
->>>>>>> 49032bf5145a1a85b5c9befdfab69decc0e0fcad
 
       <button type="submit">
         <Link to="/register">Register</Link>

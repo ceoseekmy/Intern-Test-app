@@ -12,6 +12,7 @@ function App() {
   const [socket, setSocket] = useState(null);
   const [cc_token,setcc_token]=useState(localStorage.getItem('loginToken'))
   const setupSocket = () => {
+  
    const token=localStorage.getItem('loginToken');
    setcc_token(localStorage.getItem('loginToken'))
    if(token && !socket){
@@ -46,7 +47,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes >
-      <Route path="/" element={<Root />} exact />
+      <Route path="/" element={<Root setupSocket={setupSocket} />} exact />
 
         <Route path="/register" element={<Register />} exact />
 

@@ -4,18 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 export default function Root() {
   const navigate = useNavigate();
 
-  const googleLogin = () => {
-    axios
-      .get("http://localhost:4000/api/auth/google", {})
-      .then((response) => {
-        localStorage.setItem("loginToken", response.data.token);
-        navigate("/chatroom");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   return (
     <div className="card">
       <div className="cardHeader">Let's Chat</div>
@@ -34,7 +22,7 @@ export default function Root() {
         </div>
       </div>
       <div className="inputGroup">
-        <button onClick={googleLogin}>log in (Google)</button>
+        <button>log in (Google)</button>
       </div>
 
       <button type="submit">

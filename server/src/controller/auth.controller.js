@@ -68,7 +68,6 @@ async function loginemail(req, res) {
 //login using phone number and otp
 async function sendotp(req, res) {
   const phone = req.body.phone;
-  console.log(phone);
   const otp = Math.floor(100000 + Math.random() * 900000);
   const data = `${phone}.${otp}`;
   const hash = crypto.createHmac("sha256", smsKey).update(data).digest("hex");
@@ -83,7 +82,6 @@ async function sendotp(req, res) {
       { new: true }
     );
   }
-  console.log(userExist);
 
   try {
     const response = await client.messages.create({

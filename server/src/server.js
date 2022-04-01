@@ -8,7 +8,6 @@ const passport = require("passport");
 const User = require("./models/user.model");
 const Chat = require("./models/chat.model");
 const JWT = require("jsonwebtoken");
-const { jwt } = require("twilio");
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -43,28 +42,33 @@ io.use(async (socket, next) => {
 
     socket.id = payload.id;
     next();
-  } catch (error) {}
+  } catch (error) {
+    console.log(error.message);
+  }
 });
 
-io.on("connection", (socket) => {
+io.on("connection", async (socket) => {
   console.log("Connected: " + socket.id);
 
-  const finalpush = () =>
-    Chat.find(function (err, res) {
-      if (err) {
-        throw err;
-      }
-      console.log(res);
-      io.emit("send-all-chats", res, socket.id);
-    });
+  const finalpush = async () => {
+    const chats = await Chat.find({});
+    io.emit("send-all-chats", chats, socket.id);
+  };
   finalpush();
 
-  socket.on("chatroomMessage", async (message, sentname) => {
-    let sender = sentname;
-    if (sender == "") sender = "Unknown";
+  socket.on("chatroomMessage", async ({ message, sentname }) => {
+    const sender = sentname;
+    if (sender === "") sender = "Unknown";
     const chat = new Chat({
       name: sender,
       message: message,
+    });
+    const currChat = {
+      name: sender,
+      message: message,
+    };
+    io.emit("newMessage", {
+      currChat,
     });
     await chat.save();
     finalpush();

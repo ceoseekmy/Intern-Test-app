@@ -1,31 +1,42 @@
-import React,{useState} from 'react'
+import React, { useEffect, useState } from "react";
 
-function ChatRoom({socket}) {
-
-  const [messages,setMessages]=useState([]);
-  const [userId,setuserId]=useState("");
+function ChatRoom({ socket }) {
+  const [messages, setMessages] = useState([]);
+  const [userId, setuserId] = useState("");
   const messageRef = React.useRef();
   const nameRef = React.useRef();
-  socket.on("send-all-chats",(allChats,user)=>{
-    console.log("got all chats")
+
+  socket.on("send-all-chats", (allChats, user) => {
+    console.log("got all chats");
     setMessages(allChats);
     setuserId(user);
- 
-  })
-  const sendMessage=()=>{
-       if (socket) {
-      socket.emit("chatroomMessage",messageRef.current.value,nameRef.current.value);
-      messageRef.current.value="";
+  });
 
+  useEffect(() => {
+    if (socket) {
+      socket.on("newMessage", (currChat) => {
+        const newMessages = [...messages, currChat];
+        setMessages(newMessages);
+      });
     }
-  }
+    //eslint-disable-next-line
+  }, [messages]);
+
+  const sendMessage = () => {
+    if (socket) {
+      socket.emit("chatroomMessage", {
+        message: messageRef.current.value,
+        sentname: nameRef.current.value,
+      });
+      messageRef.current.value = "";
+    }
+  };
 
   return (
     <div className="chatroomPage">
-       
       <div className="chatroomSection">
         <div className="cardHeader">Random Chat</div>
-          <div className="chatroomContent">
+        <div className="chatroomContent">
           {messages.map((message, i) => (
             <div key={i} className="message">
               <span
@@ -40,7 +51,6 @@ function ChatRoom({socket}) {
           ))}
         </div>
         <div className="chatroomActions">
-        
           <div>
             <input
               type="text"
@@ -55,10 +65,8 @@ function ChatRoom({socket}) {
             </button>
           </div>
         </div>
-       
       </div>
-      <div >
-        
+      <div>
         <input
           type="text"
           name="message"

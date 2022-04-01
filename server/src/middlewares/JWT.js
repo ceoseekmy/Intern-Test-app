@@ -9,7 +9,7 @@ async function generateToken(user) {
     {
       id: user._id,
     },
-    process.env.Secret,
+    process.env.SECRET,
     {
       expiresIn: 6000000,
     }
@@ -27,7 +27,7 @@ async function checkToken(req, res, next) {
   }
 
   try {
-    const user = JWT.verify(token, process.env.Secret);
+    const user = JWT.verify(token, process.env.SECRET);
     // req.body.userID = user.id;
   } catch (error) {
     return res.status(400).json({

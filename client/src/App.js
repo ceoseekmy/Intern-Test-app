@@ -44,27 +44,32 @@ function App() {
   }, []);
 
   return (
-    <BrowserRouter>
-      <Routes >
-      <Route path="/" element={<Root />} exact />
+    <div > 
+   <h1 className="text-3xl text-red-300 font-bold underline">
+      Hello world!
+    </h1>
+    </div>
+  //   <BrowserRouter>
+  //     <Routes >
+  //     <Route path="/" element={<Root />} exact />
 
-        <Route path="/register" element={<Register />} exact />
+  //       <Route path="/register" element={<Register />} exact />
 
-        <Route
-          path="/login"
-          element={<Login setupSocket={setupSocket} />}
-          exact
+  //       <Route
+  //         path="/login"
+  //         element={<Login setupSocket={setupSocket} />}
+  //         exact
           
-        />
-        <Route path="/loginwithotp" element={<LoginWithOtp setupSocket={setupSocket} />} exact />
+  //       />
+  //       <Route path="/loginwithotp" element={<LoginWithOtp setupSocket={setupSocket} />} exact />
       
-        <Route
-          path="/chatroom"
-          element={cc_token ?(socket? <ChatRoom socket={socket} />:setupSocket()): <Navigate to="/login"/>}
-          exact
-        />
-      </Routes>
-    </BrowserRouter>
+  //       <Route
+  //         path="/chatroom"
+  //         element={cc_token ?(socket? <ChatRoom socket={socket} />:setupSocket()): <Navigate to="/login"/>}
+  //         exact
+  //       />
+  //     </Routes>
+  //   </BrowserRouter>
   );
 }
 

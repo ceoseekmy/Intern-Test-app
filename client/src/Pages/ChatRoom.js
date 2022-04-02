@@ -6,11 +6,20 @@ function ChatRoom({ socket }) {
   const messageRef = React.useRef();
   const nameRef = React.useRef();
 
-  socket.on("send-all-chats", (allChats, user) => {
-    console.log("got all chats");
-    setMessages(allChats);
-    setuserId(user);
-  });
+  useEffect(() => {
+    if (socket) {
+      socket.on("send-all-chats", (allChats, user) => {
+        console.log("got all chats");
+        setMessages(allChats);
+        setuserId(user);
+      });
+    }
+  }, []);
+  // socket.on("send-all-chats", (allChats, user) => {
+  //   console.log("got all chats");
+  //   setMessages(allChats);
+  //   setuserId(user);
+  // });
 
   useEffect(() => {
     if (socket) {

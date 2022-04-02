@@ -89,7 +89,6 @@ async function sendotp(req, res) {
       from: +15512092997,
       to: `+91${phone}`,
     });
-    console.log(response);
   } catch (error) {
     console.log(error);
     return res.status(400).send(error.message);

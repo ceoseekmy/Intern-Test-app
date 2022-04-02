@@ -37,10 +37,10 @@ const io = new Server(server, {
 });
 io.use(async (socket, next) => {
   try {
-    const token = socket.handshake.query.token;
-    const payload = JWT.verify(token, process.env.SECRET);
+    // const token = socket.handshake.query.token;
+    // const payload = JWT.verify(token, process.env.SECRET);
 
-    socket.id = payload.id;
+    // socket.id = payload.id;
     next();
   } catch (error) {
     console.log(error.message);
@@ -48,8 +48,6 @@ io.use(async (socket, next) => {
 });
 
 io.on("connection", async (socket) => {
-  console.log("Connected: " + socket.id);
-
   const finalpush = async () => {
     const chats = await Chat.find({});
     io.emit("send-all-chats", chats, socket.id);

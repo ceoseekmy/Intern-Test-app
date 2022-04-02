@@ -32,11 +32,7 @@ function App() {
       setSocket(newSocket);
     } else {
       return (
-        <Route
-          path="/login"
-          element={<Login setupSocket={setupSocket} />}
-          exact
-        />
+        <Route path="/" element={<Root setupSocket={setupSocket} />} exact />
       );
     }
   };
@@ -75,7 +71,7 @@ function App() {
                 setupSocket()
               )
             ) : (
-              <Navigate to="/login" />
+              <Navigate to="/" />
             )
           }
           exact

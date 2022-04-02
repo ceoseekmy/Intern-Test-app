@@ -4,7 +4,7 @@ import background from '../assets/homepage.png';
 
 export default function Root() {
     return (
-        <div className="flex">
+        <div className="block md:flex">
             <div className="flex basis-1/2 h-screen justify-center items-center">
                 <div className="flex flex-col bg-fuchsia-300 w-2/3 rounded-lg justify-center items-center">
                     <h2 className="text-2xl text-gray-900 font-semibold m-4 p-4 font-mono">
@@ -52,8 +52,8 @@ export default function Root() {
                     </button>
                 </div>
             </div>
-            <div className="flex bg-slate-400 h-screen basis-1/2">
-                <img className="w-full" src={background} alt="homepage icon" />
+            <div className="bg-slate-400 h-screen basis-1/2 hidden md:block">
+                <img className="w-full h-full" src={background} alt="homepage icon" />
             </div>
         </div>
     );

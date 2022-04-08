@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import background from "../assets/homepage.png";
 function Register() {
   const nameRef = React.createRef();
@@ -114,52 +114,6 @@ function Register() {
       </div>
     </div>
 
-    // <div className="card">
-    //   <div className="cardHeader">Registration</div>
-    //   <div className="cardBody">
-    //     <div className="inputGroup">
-    //       <label htmlFor="name">Name</label>
-    //       <input
-    //         type="text"
-    //         name="name"
-    //         id="name"
-    //         placeholder="Your Name"
-    //         ref={nameRef}
-    //       />
-    //     </div>
-    //     <label htmlFor="email">Email</label>
-    //     <input
-    //       type="email"
-    //       name="email"
-    //       id="email"
-    //       placeholder="abc@example.com"
-    //       ref={emailRef}
-    //     />
-    //   </div>
-    //   <div className="inputGroup">
-    //     <label htmlFor="password">Password</label>
-    //     <input
-    //       type="password"
-    //       name="password"
-    //       id="password"
-    //       placeholder="Your Password"
-    //       ref={passwordRef}
-    //     />
-    //   </div>
-    //   <div className="inputGroup">
-    //     <label>Mobile no.</label>
-    //     <input
-    //       type="text"
-    //       name="phone"
-    //       id="phone"
-    //       placeholder="Your mobile no."
-    //       ref={phoneRef}
-    //     />
-    //   </div>
-    //   <button type="submit" onClick={registerUser}>
-    //   Register
-    //   </button>
-    // </div>
   );
 }
 

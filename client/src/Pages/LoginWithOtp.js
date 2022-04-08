@@ -114,41 +114,6 @@ function LoginWithOtp(props) {
         <img className="w-full h-full" src={background} alt="homepage icon" />
       </div>
     </div>
-
-    // <div className="card">
-    //   <div className="cardHeader">Login</div>
-    //   {portal ? (
-    //     <div className="cardBody">
-    //       <div className="inputGroup">
-    //         <label htmlFor="email">Enter Otp</label>
-    //         <input
-    //           type="tel"
-    //           id="phone"
-    //           name="phone"
-    //           placeholder="enter Otp"
-    //           ref={otpRef}
-    //         />
-    //       </div>
-
-    //       <button onClick={verifyotp}>Verify</button>
-    //     </div>
-    //   ) : (
-    //     <div className="cardBody">
-    //       <div className="inputGroup">
-    //         <label htmlFor="email">Mobile no.</label>
-    //         <input
-    //           type="tel"
-    //           id="phone"
-    //           name="phone"
-    //           placeholder="enter mobile no."
-    //           ref={mobileRef}
-    //         />
-    //       </div>
-
-    //       <button onClick={sendOtp}>Send otp</button>
-    //     </div>
-    //   )}
-    // </div>
   );
 }
 
